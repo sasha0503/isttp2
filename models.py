@@ -6,8 +6,8 @@ db = SQLAlchemy()
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    author = db.Column(db.String(50), nullable=False)
     year = db.Column(db.Integer, nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
     poems = db.relationship('Poem', backref='book')
     contracts = db.relationship('Contract', backref='book')
 
@@ -16,6 +16,7 @@ class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(90), nullable=False)
     city = db.Column(db.String(30), nullable=False)
+    books = db.relationship('Book', backref='author')
 
 
 class Poem(db.Model):
