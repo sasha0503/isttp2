@@ -23,49 +23,55 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/api/books', methods=['GET'])
-def get_books():
-    books = Book.query.all()
-    books = {b.id: f'{b.name} {b.year}' for b in books}
-    return books
+@app.route('/api/authors', methods=['GET'])
+def get_authors():
+    authors = Author.query.all()
+    authors = {a.id: f'{a.name} {a.city}' for a in authors}
+    return authors
 
 
-@app.route('/api/books/create', methods=['POST'])
-def create_book():
+
+
+@app.route('/api/authors/create', methods=['POST'])
+def create_author():
     r = request
     try:
         data: dict = jsonpickle.decode(r.data)
     except JSONDecodeError:
-        return {"status": 500}
-    book = Book(name=data['name'], year=data['year'], author=data['author'])
-    db.session.add(book)
+        return {"error": "BadJSON"}
+    try:
+        name = data['name']
+        city = data['city']
+    except KeyError:
+        return {"error": "InputError"}
+    author = Author(name=name, city=city)
+    db.session.add(author)
     db.session.commit()
-    return {"id": book.id}
+    return {"id": author.id}
 
 
-@app.route('/api/books/delete/<id>', methods=['DELETE'])
-def delete_book(id):
-    book = Book.query.get(id)
-    if not book:
-        return {"status": 404}
-    db.session.delete(book)
+@app.route('/api/authors/delete/<id>', methods=['DELETE'])
+def delete_author(id):
+    author = Author.query.get(id)
+    if not author:
+        return {"error": "NotFound"}
+    db.session.delete(author)
     db.session.commit()
     return {"status": 200}
 
 
-@app.route('/api/books/update/<id>', methods=['PUT'])
-def update_book(id):
+@app.route('/api/authors/update/<id>', methods=['PUT'])
+def update_author(id):
     r = request
     try:
         data: dict = jsonpickle.decode(r.data)
     except JSONDecodeError:
-        return {"status": 500}
-    book = Book.query.get(id)
-    if not book:
-        return {"status": 404}
-    book.name = data.get('name', book.name)
-    book.year = data.get('year', book.year)
-    book.author = data.get('author', book.author)
+        return {"error": "BadJSON"}
+    author = Author.query.get(id)
+    if not author:
+        return {"error": "NotFound"}
+    author.name = data.get('name', author.name)
+    author.city = data.get('city', author.city)
     db.session.commit()
     return {"status": 200}
 
