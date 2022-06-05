@@ -13,14 +13,17 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-item nav-link active" href="http://localhost:8080/poets">Поети</a>
+              <a class="nav-item nav-link active" href="http://localhost:8080/authors">Поети</a>
               <a class="nav-item nav-link" href="http://localhost:8080/books">Збірки</a>
               <a class="nav-item nav-link" href="http://localhost:8080/publishers">Видавництва</a>
             </div>
           </div>
         </nav>
 
-{% block body %}{% endblock %}
+    <div style="text-align:center">
+        {% block body %}
+        {% endblock %}
+    </div>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
                 integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

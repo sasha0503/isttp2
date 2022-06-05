@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+        <h1> {{name}} </h1>
+        <h3> {{city}} </h3>
+        <h3></h3>
+        <h3></h3>
+<div style="text-align:left; text-indent: 50px">
+    <h3> Збірки </h3>
+    {% for book in books %}
+        {{book}}
+    {% endfor %}
+</div>
+{% endblock %}

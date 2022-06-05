@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div style="text-align:left; text-indent: 50px">
+        <h1>Додати автора</h1>
+        <form action="/authors/create", method="post">
+            <input name="name" placeholder="Ім'я" type="text" value="">
+            <input name="city" placeholder="Місто" type="text" value="">
+            <input type="submit" value="Готово!">
+        </form>
+    </div>
+
+    <div style="text-align:left; text-indent: 50px">
+        <h1>Видалити автора</h1>
+        <form action="/authors/delete", method="post">
+            <select name="name">
+                <option disabled selected value="">Ім'я</option>
+                {% for surname in names %}
+                    <option value="{{surname}}">{{surname}}</option>>
+                {% endfor %}
+            <input type="submit" value="Видалити">
+        </form>
+    </div>
+
+    <div style="text-align:left; text-indent: 50px">
+        <h1>Оновити інформацію</h1>
+        <form action="/authors/update", method="post">
+            <select name="name">
+                <option disabled selected value="">Автор</option>
+                {% for surname in names %}
+                    <option value="{{surname}}">{{surname}}</option>>
+                {% endfor %}
+            <input name="new_name" placeholder="Нове ім'я" type="text" value="">
+            <input name="new_city" placeholder="Нове місто" type="text" value="">
+            <input type="submit" value="Оновити">
+        </form>
+    </div>
+    {% for name, id in names|zip(ids) %}
+        <a style="font-size:40px" href="http://localhost:8080/authors/{{id}}"> {{name}} </a>
+        <h3></h3>
+    {% endfor %}
+{% endblock %}

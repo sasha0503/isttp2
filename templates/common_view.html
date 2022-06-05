@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% for name, id in names|zip(ids) %}
+        <a style="font-size:40px" href="http://localhost:8080/{{category}}/{{id}}"> {{name}} </a>
+    {% endfor %}
+{% endblock %}
